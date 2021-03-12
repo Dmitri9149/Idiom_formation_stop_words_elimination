@@ -20,13 +20,17 @@ impl TextStageOriginal {
             text:contents.clone()
         }
     }
+}
 
-//    pub fn from_initial(self) -> TextStage {
-//        TextStage {
-//            text_0:self.text_0,
-//            text_1:&self.text_0,
-//
-//        }
-//    }
+pub struct TextStage <'a>{
+    pub text:&'a str
+}
 
+impl TextStage <'_>{
+    pub fn from_original(orig:&TextStageOriginal) -> TextStage {
+        TextStage {
+            text:&orig.text
+        }
+        
+    }
 }
