@@ -4,7 +4,7 @@ use std::collections::HashMap;
 
 
 //stage of text; text as a big string and the string processing
-pun struct TextStage {
+pub struct TextStage {
 // original text
     pub text_0:str;
 // text after some processing
