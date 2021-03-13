@@ -4,7 +4,7 @@
 use unicode_segmentation::UnicodeSegmentation;
 // use std::ops::Deref;
 //use fancy_regex::Regex;
-use crate::TextStage;
+use crate::text_stage::TextStage;
 
 pub struct Sentences {
     pub sentences: Vec<String>
@@ -14,16 +14,28 @@ pub struct Sentences {
 // UnicodeSegmentation and construct the Vector of Words where every
 // sentence is treated as a big unique 'word'
 //
+impl Sentences { 
     pub fn vocab_of_sentences(stage: &TextStage) -> Sentences{
         let sentences = stage
             .text
             .unicode_sentences()
             .map(|x| x.to_owned())
             .collect::<Vec<String>>();
-        WordsVector {words:sentences}
+        Sentences {sentences:sentences}
 
     }
 
+// trim the sentences in the vector from some characters
+
+    pub fn trim_sentences(&mut self, ch:char) {
+        self.sentences = self.sentences
+            .iter()
+            .map(|x| x.trim_matches(ch)
+            .to_owned())
+            .collect::<Vec<String>>();
+    }
+
+}
 
 
 
