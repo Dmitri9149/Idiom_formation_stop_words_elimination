@@ -22,15 +22,50 @@ impl TextStageOriginal {
     }
 }
 
-pub struct TextStage <'a>{
-    pub text:&'a str
+pub struct TextStage {
+    pub text:String
 }
-
-impl TextStage <'_>{
+// build TextStage (we can process strings here) from 
+// TextStageOriginal where we keep the original text-string
+impl TextStage {
     pub fn from_original(orig:&TextStageOriginal) -> TextStage {
         TextStage {
-            text:&orig.text
+            text:orig.text.to_owned()
         }
         
     }
+
+// change a char to another char
+    pub fn replace_char_to_char(self, x:char, y:char) -> TextStage {
+        let xx = x;
+        let yy = y;
+        let new_text = self.text.chars()
+            .map(|x| -> char {
+                if x==xx {
+                    yy
+                } else {x}
+            })
+        .collect();
+
+        TextStage {
+            text:new_text, ..self
+        }
+    }
+
+ // change a chars from a list to another char
+    pub fn replace_chars_to_char(self, aa:&str, b:char) -> TextStage {
+        let text = self.text.chars()
+            .map(|x| -> char {
+                if aa.contains(x) {
+                    b
+                } else {x}
+            })
+        .collect();
+
+        TextStage {
+            text:text, ..self
+        }
+    }
+
+
 }
