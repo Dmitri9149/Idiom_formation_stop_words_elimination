@@ -3,7 +3,8 @@ use std::fs::File;
 use std::collections::HashMap;
 
 
-//stage of text; text as a big string and the string processing
+//stage of text; text as a big string
+// mostly for to keep the original text
 pub struct TextStageOriginal {
 // original text
     pub text:String
@@ -52,7 +53,8 @@ impl TextStage {
         }
     }
 
- // change a chars from a list to another char
+ // change a chars from a list (the list is represented as 
+ // a string) to another char
     pub fn replace_chars_to_char(self, aa:&str, b:char) -> TextStage {
         let text = self.text.chars()
             .map(|x| -> char {
@@ -65,6 +67,47 @@ impl TextStage {
         TextStage {
             text:text, ..self
         }
+    }
+
+
+// insert ' ' between punctuation marks '!,.' and a word 
+//
+    pub fn separate_punctuation(self, s:&str) -> TextStage {
+        let mut new_str = String::new();
+
+        let mut it = self.text.chars().peekable();
+
+        while let Some(current) = it.next() {
+            if let Some(&next) = it.peek() {
+                if current != ' ' &&  s.contains(next) {
+                    new_str.push(current);
+                    new_str.push(' ');
+                }  else { new_str.push(current) }
+            }
+        }
+        TextStage {text: new_str, ..self}
+    }
+// to lowercase all the string
+    pub fn to_lowercase(self) -> TextStage {
+        let text = self.text.to_lowercase();
+        TextStage { text: text, ..self }
+    }
+
+// replace new line symbols by space (\t \n \r)
+    pub fn replace_new_line(self) -> TextStage {
+        let mut text = self.text.replace('\t',&' '.to_string()); // '\t'
+//        self.text1.replace('\t',&' '.to_string()); // '\t'
+        text = text.replace('\n',&' '.to_string()); // '\n'
+        text = text.replace('\r', &' '.to_string());
+
+
+        TextStage {text:text,  ..self }
+    }
+
+//replace all occurrences of one string within another 
+    pub fn replace_string_to_string(self, sub1:&str,sub2:&str) -> TextStage{
+        let result = self.text.replace(sub1,sub2);
+        TextStage {text:result}
     }
 
 
