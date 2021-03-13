@@ -105,7 +105,8 @@ impl TextStage {
     }
 
 //replace all occurrences of one string within another 
-    pub fn replace_string_to_string(self, sub1:&str,sub2:&str) -> TextStage{
+//string 
+   pub fn replace_string_to_string(self, sub1:&str,sub2:&str) -> TextStage{
         let result = self.text.replace(sub1,sub2);
         TextStage {text:result}
     }
