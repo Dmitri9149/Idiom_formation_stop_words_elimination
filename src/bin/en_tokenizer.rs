@@ -1,5 +1,6 @@
 // main functionality of the tokenizer
 use entropy_tokenizer::text_stage::{TextStageOriginal, TextStage};
+use entropy_tokenizer::sentence_stage::Sentences;
 
 fn main() {
 // get text from a file 

@@ -6,7 +6,7 @@ use unicode_segmentation::UnicodeSegmentation;
 //use fancy_regex::Regex;
 use crate::TextStage;
 
-pub str Sentences {
+pub struct Sentences {
     pub sentences: Vec<String>
 }
 
