@@ -37,11 +37,12 @@ impl SentencesA<'_> {
             .collect::<Vec<&str>>();
     }
 
-//    pub fn separate_punctuation_a(&mut self, st:&str) {
-//        self.sentences = self.sentences
-//            .iter()
-//            .map(|x| if st.contains())
-//    }
+    pub fn separate_punctuation_a(&mut self, st:&str) {
+        self.sentences = self.sentences
+            .iter()
+            .map(|x| x.replace(st, " "))
+            .collect::<Vec<&str>>();
+    }
 
 }
 
