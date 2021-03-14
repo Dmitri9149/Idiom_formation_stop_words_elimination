@@ -1,10 +1,12 @@
 // functions for string processing 
 
-pub fn separate_punctuation<'a>(strng:&'a mut str, st:&str) -> &'a str{
+pub fn separate_punctuation(strng:String, st:&str) -> String{
+    let mut res=strng;
     for ch in st.chars() {
-        strng.replace(ch, " ");
+        res = res
+            .replace(&ch.to_string(), &[" ", &ch.to_string(), " "].join(""))
+            .to_owned();
     }
-    
-    return strng
+    return res
 }  
 
