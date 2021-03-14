@@ -5,6 +5,8 @@ use unicode_segmentation::UnicodeSegmentation;
 // use std::ops::Deref;
 //use fancy_regex::Regex;
 use crate::text_stage::TextStage;
+use crate::string_processing::separate_punctuation;
+
 
 pub struct Sentences {
     pub sentences: Vec<String>
@@ -30,10 +32,17 @@ impl Sentences {
     pub fn trim_sentences(&mut self, ch:char) {
         self.sentences = self.sentences
             .iter()
-            .map(|x| x.trim_matches(ch)
-            .to_owned())
+            .map(|x| x.trim_matches(ch).to_owned())
             .collect::<Vec<String>>();
     }
+
+    pub fn separate_punctuation(&mut self, st:&str) {
+        self.sentences = self.sentences
+            .iter()
+            .map(|x| separate_punctuation(x.to_string(),st))
+            .collect::<Vec<String>>();
+    }
+
 
 }
 
