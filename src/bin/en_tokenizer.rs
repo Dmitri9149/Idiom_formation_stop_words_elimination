@@ -23,6 +23,8 @@ fn main() {
     sentences.split_on_string("_");
     sentences.split_on_string(";");
     sentences.trim_sentences(' ');
+    sentences.no_empty_strings();
+
 
     
 

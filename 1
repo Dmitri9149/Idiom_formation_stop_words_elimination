@@ -52,10 +52,17 @@ impl Sentences {
     }
     
     pub fn no_empty_strings(&mut self) {
+//        self.sentences = self.sentences
+//            .iter()
+//            .filter(|x| x.is_empty()) 
+//            .map(str::to_owned)
+//            .collect::<Vec<String>>();
+//
         self.sentences = self.sentences
-            .iter()
+            .into_iter()
             .map(|x| x.to_string())
-            .filter (|x| x.is_empty()== false)
+            .filter (|x| x.is_empty())
+//            .map(str::to_owned)
             .collect::<Vec<String>>();
     }
 
