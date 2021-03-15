@@ -14,8 +14,21 @@ fn main() {
     let mut sentences = Sentences::vocab_of_sentences(&txt);
     sentences.trim_sentences(' ');
     sentences.separate_punctuation("?.!\"—,_:");
+    sentences.split_on_string(",");
+    sentences.split_on_string(":");
+    sentences.split_on_string(".");
+    sentences.split_on_string("?");
+    sentences.split_on_string("—");
+    sentences.split_on_string("!");
+    sentences.split_on_string("_");
+    sentences.split_on_string(";");
+    sentences.trim_sentences(' ');
+
+    
+
+
 
 //    println!("The text : {:?}\n", txt.text);
-    println!("The sentences : {:?}", &sentences.sentences[0..100]);
+    println!("The sentences : {:?}", &sentences.sentences[0..200]);
 }
 
