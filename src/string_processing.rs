@@ -7,6 +7,6 @@ pub fn separate_punctuation(strng:String, st:&str) -> String{
             .replace(&ch.to_string(), &[" ", &ch.to_string(), " "].join(""))
             .to_owned();
     }
-    return res
-}  
+    res
+}
 

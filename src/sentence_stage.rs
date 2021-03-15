@@ -43,6 +43,14 @@ impl Sentences {
             .collect::<Vec<String>>();
     }
 
+    pub fn split_on_string(&mut self, st:&str) {
+        self.sentences = self.sentences
+            .iter()
+            .flat_map(|x| x.split(st))
+            .map(str::to_owned)
+            .collect::<Vec<_>>();
+    }
+
 
 }
 
