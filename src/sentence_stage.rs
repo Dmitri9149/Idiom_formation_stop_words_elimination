@@ -62,5 +62,17 @@ impl Sentences {
 }
 
 
+// split sentences to words and keep as vector of words collections
+pub struct WordsCollection {
+    pub collections:Vec<Vec<String>>
+}
 
-
+impl WordsCollection {
+    pub fn from_sentences(sn:&Sentences, f:fn(String)-> Vec<String>) -> WordsCollection{
+        let res = sn.sentences
+            .iter()
+            .map(|x| f(x.to_string()))
+            .collect::<Vec<Vec<String>>>();
+        WordsCollection {collections:res}
+    }
+}

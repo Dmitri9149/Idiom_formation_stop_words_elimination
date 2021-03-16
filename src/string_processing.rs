@@ -10,3 +10,11 @@ pub fn separate_punctuation(strng:String, st:&str) -> String{
     res
 }
 
+pub fn to_collection_split_on_space(st:String) -> Vec<String>{
+    let res = st
+        .split(" ")
+        .map(|x| x.to_string())
+        .collect::<Vec<String>>();
+    res
+}
+
