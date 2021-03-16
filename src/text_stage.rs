@@ -104,6 +104,20 @@ impl TextStage {
         TextStage {text:text,  ..self }
     }
 
+    pub fn remove_white_space(self) -> TextStage {
+        let text = self.text
+            .chars()
+            .map(|x| -> char {
+                if x.is_whitespace() {
+                    ' '
+                } else { x }
+            })
+            .collect();
+
+        TextStage {text:text, ..self}
+    }
+
+
 //replace all occurrences of one string within another 
 //string 
    pub fn replace_string_to_string(self, sub1:&str,sub2:&str) -> TextStage{

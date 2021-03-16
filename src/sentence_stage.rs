@@ -73,12 +73,31 @@ impl WordsCollection {
         WordsCollection {collections:res}
     }
 // flatten words collections to vector of words
-    pub fn flatten_words_collections(cn:&WordsCollection)-> Vec<String> {
-        cn.collections
+    pub fn flatten_words_collections(cn:&WordsCollection)-> VectorOfWords {
+        let res = cn.collections
             .iter()
             .flatten()
             .map(|x| x.to_owned())
-            .collect()
+            .collect();
+
+        VectorOfWords {words:res}
     }
 }
+
+// vector of unordered, may be repeated words
+pub struct VectorOfWords {
+    pub words:Vec<String>
+}
+
+impl VectorOfWords {
+    pub fn no_empty_strings(&mut self) {
+        self.words = self.words
+            .iter()
+            .map(|x| x.to_owned())
+            .filter(|x| x.is_empty() == false)
+            .collect::<Vec<String>>();
+
+    }
+}
+
 
