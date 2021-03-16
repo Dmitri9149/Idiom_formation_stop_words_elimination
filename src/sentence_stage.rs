@@ -28,21 +28,20 @@ impl Sentences {
     }
 
 // trim the sentences in the vector from some characters
-
     pub fn trim_sentences(&mut self, ch:char) {
         self.sentences = self.sentences
             .iter()
             .map(|x| x.trim_matches(ch).to_owned())
             .collect::<Vec<String>>();
     }
-
+// separate punctuation
     pub fn separate_punctuation(&mut self, st:&str) {
         self.sentences = self.sentences
             .iter()
             .map(|x| separate_punctuation(x.to_string(),st))
             .collect::<Vec<String>>();
     }
-
+// split sentencs at some 'string' (like split at "," comma)
     pub fn split_on_string(&mut self, st:&str) {
         self.sentences = self.sentences
             .iter()
@@ -50,7 +49,7 @@ impl Sentences {
             .map(str::to_owned)
             .collect::<Vec<_>>();
     }
-    
+// eliminate all empty strings from collection
     pub fn no_empty_strings(&mut self) {
         self.sentences = self.sentences
             .iter()
@@ -60,8 +59,6 @@ impl Sentences {
     }
 
 }
-
-
 // split sentences to words and keep as vector of words collections
 pub struct WordsCollection {
     pub collections:Vec<Vec<String>>
@@ -75,4 +72,13 @@ impl WordsCollection {
             .collect::<Vec<Vec<String>>>();
         WordsCollection {collections:res}
     }
+// flatten words collections to vector of words
+    pub fn flatten_words_collections(cn:&WordsCollection)-> Vec<String> {
+        cn.collections
+            .iter()
+            .flatten()
+            .map(|x| x.to_owned())
+            .collect()
+    }
 }
+
