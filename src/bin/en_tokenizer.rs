@@ -2,6 +2,8 @@
 use entropy_tokenizer::text_stage::{TextStageOriginal, TextStage};
 use entropy_tokenizer::sentence_stage::{Sentences, WordsCollection};
 use entropy_tokenizer::string_processing::{to_collection_split_on_space};
+use entropy_tokenizer::words_vocab::{WordsVocab};
+
 //use entropy_tokenizer::sentence_stage_a::SentencesA;
 
 
@@ -30,6 +32,9 @@ fn main() {
     sentences.no_empty_strings();
 
     let collection = WordsCollection::from_sentences(&sentences, to_collection_split_on_space);
+//    let flatten_collection = WordsCollection::flatten_words_collections(&collection);
+    let words_vector = WordsCollection::flatten_words_collections(&collection);
+    let words_vocab = WordsVocab::vocab_from_vector(&words_vector);
 
 
     
@@ -39,5 +44,7 @@ fn main() {
 //    println!("The text : {:?}\n", txt.text);
     println!("The sentences :\n{:?}\n", &sentences.sentences[0..200]);
     println!("The collections:\n{:?}\n", &collection.collections[0..200]);
+//    println!("The words vector:\n{:?}\n", &words_vector);
+    println!("The words_vocab:\n{:?}\n", &words_vocab.words);
 }
 
