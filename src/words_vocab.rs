@@ -28,7 +28,7 @@ impl WordsVocab {
 
 // vocab as BTreeMap
 pub struct WordsVocabAsBTree {
-    pub words:BTreeMap<string, i32>
+    pub words:BTreeMap<String, i32>
 }
 
 impl WordsVocabAsBTree {
