@@ -19,7 +19,7 @@ fn main() {
 //    println!("The text sentences: {:?}\n", &sentences.sentences[0..200]);
 
     sentences.trim_sentences(' ');
-    sentences.separate_punctuation("?.!\"—,_:");
+    sentences.separate_punctuation("?.!\"—,_:()[]");
     sentences.split_on_string(",");
     sentences.split_on_string(":");
     sentences.split_on_string(".");
@@ -46,5 +46,6 @@ fn main() {
     println!("The collections:\n{:?}\n", &collection.collections[0..200]);
 //    println!("The words vector:\n{:?}\n", &words_vector);
     println!("The words_vocab:\n{:?}\n", &words_vocab.words);
+    println!("The number of words :{}", &words_vocab.words.keys().len());
 }
 
