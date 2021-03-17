@@ -3,7 +3,7 @@ use entropy_tokenizer::text_stage::{TextStageOriginal, TextStage};
 use entropy_tokenizer::sentence_stage::{Sentences, WordsCollection};
 use entropy_tokenizer::string_processing::{to_collection_split_on_space};
 use entropy_tokenizer::words_vocab::{WordsVocab, WordsVocabAsBTree};
-use entropy_tokenizer::words_to_numbers::{IndexOfWords};
+use entropy_tokenizer::words_to_numbers::{IndexToWords};
 
 //use entropy_tokenizer::sentence_stage_a::SentencesA;
 
