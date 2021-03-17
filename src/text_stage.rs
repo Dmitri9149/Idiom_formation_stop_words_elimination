@@ -1,6 +1,6 @@
 use std::io::prelude::*;
 use std::fs::File;
-use std::collections::HashMap;
+//use std::collections::HashMap;
 
 
 //stage of text; text as a big string
