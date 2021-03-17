@@ -75,12 +75,23 @@ fn main() {
     let words_vocab = WordsVocabAsBTree::vocab_from_vector(&words_vector);
     let ordered_vector = words_vocab.to_value_ordered_vector();
 
+    let special = vec!["eos".to_string(), "bos".to_string(), "none".to_string()];
+
+    let index_vocab = IndexToWords::from_words_vocab(&words_vocab, special);
+
 //    println!("The text : {:?}\n", txt_orig.text);
     println!("The sentences :\n{:?}\n", &sentences.sentences[0..200]);
     println!("The collections:\n{:?}\n", &collection.collections[0..500]);
 //    println!("The words vector:\n{:?}\n", &words_vector);
 //    println!("The words_vocab:\n{:?}\n", &words_vocab.words);
     println!("The number of words :{}", &words_vocab.words.keys().len());
-    println!("The value ordered vocab of words:\n{:?}\n", &ordered_vector[0..10000]);
+    println!("The value ordered vocab of words:\n{:?}\n", &ordered_vector[0..200]);
+    println!("The index to words is :{:?}", &index_vocab.index);
+//    println!("The words to index is :{:?}", &index_vocab.word);
+//    for (key, value) in index_vocab.index.range(0..200) {
+//        println!("{}: {}", key, value);
+//    }
+
+
 }
 
