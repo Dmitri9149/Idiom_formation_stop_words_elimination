@@ -8,6 +8,7 @@ use unicode_segmentation::UnicodeSegmentation;
 //use fancy_regex::Regex;
 use crate::text_stage::TextStage;
 use crate::string_processing::separate_punctuation;
+use crate::words_to_numbers::{IndexToWordsAsBTree};
 
 
 pub struct Sentences {
@@ -106,10 +107,20 @@ pub struct IndicesCollection {
     indices:Vec<Vec<u32>>
 }
 
+// take a WordsCollection and a WordsToNumbers structure and 
+// produce Vector of Vector of indices 
+/*
 impl IndicesCollection {
+    pub fn from_words_collection(collection:&WordsCollection, words_to_index:&WordsToNumbersAsBTree) 
+        -> IndicesCollection {
+            let mut res = collection.collections
+                .iter()
+                .map(|x| )
+                .
 
+        }
 }
-
+*/
 // vector of unordered, may be repeated words
 pub struct VectorOfWords {
     pub words:Vec<String>
@@ -136,5 +147,16 @@ pub fn eliminate_empty_words(vec:Vec<String>)-> Vec<String>{
         .filter(|x| x.is_empty() == false)
         .collect::<Vec<String>>();
     res.to_vec()
-
 }
+// take Vector of Words and WordsToIndex structure and transform words in the Vector 
+// to the indices: Vector of words -> Vector of indices
+/*
+pub fn transform_collection_to_indices(collection:&Vec<String>, indices:&WordsToIndex) 
+    -> {
+        let mut res = collection
+            .iter()
+            .map(|x| )
+    }
+*/
+
+
