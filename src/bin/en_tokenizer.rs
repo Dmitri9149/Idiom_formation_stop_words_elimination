@@ -1,6 +1,6 @@
 // main functionality of the tokenizer
 use entropy_tokenizer::text_stage::{TextStageOriginal, TextStage};
-use entropy_tokenizer::sentence_stage::{Sentences, WordsCollection};
+use entropy_tokenizer::sentence_stage::{Sentences, WordsCollection,IndicesCollection};
 use entropy_tokenizer::string_processing::{to_collection_split_on_space};
 use entropy_tokenizer::words_vocab::{WordsVocab, WordsVocabAsBTree, WordsAsNumbersVocab};
 use entropy_tokenizer::words_to_numbers::{IndexToWordsAsBTree};
@@ -65,7 +65,7 @@ fn main() {
     sentences.split_on_string("]");
 
     sentences.trim_sentences(' ');
-//    sentences.no_empty_strings();
+    sentences.no_empty_strings();
 
     let mut collection = WordsCollection::from_sentences(&sentences, to_collection_split_on_space);
 //    let flatten_collection = WordsCollection::flatten_words_collections(&collection);
@@ -83,6 +83,7 @@ fn main() {
     let index_vocab = IndexToWordsAsBTree::from_words_vocab(&words_vocab);
 
     let word_as_number_vocab = WordsAsNumbersVocab::from_words_vocab_btree(&words_vocab, &index_vocab);
+    let collection_of_sentences_with_indices = IndicesCollection::from_words_collection(&collection,&index_vocab);
 
 //    println!("The text : {:?}\n", txt_orig.text);
     println!("The sentences :\n{:?}\n", &sentences.sentences[0..200]);
@@ -116,6 +117,6 @@ fn main() {
 //    println!("The words to index is :\n{:?}", &index_vocab.word);
     println!("The vocab of index_of_word -> quantity of the word in vocab : \n{:?}"
              , &word_as_number_vocab.words[0..200]);
-
+    println!("The collection of sentences as indices :\n{:?}", &collection_of_sentences_with_indices.indices[0..200]);
 }
 

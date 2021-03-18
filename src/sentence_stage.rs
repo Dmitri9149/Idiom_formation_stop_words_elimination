@@ -104,23 +104,25 @@ impl WordsCollection {
 // same as WordsCollection but words now are represented by their 
 // indices
 pub struct IndicesCollection {
-    indices:Vec<Vec<u32>>
+    pub indices:Vec<Vec<u32>>
 }
 
 // take a WordsCollection and a WordsToNumbers structure and 
 // produce Vector of Vector of indices 
-/*
+
 impl IndicesCollection {
-    pub fn from_words_collection(collection:&WordsCollection, words_to_index:&WordsToNumbersAsBTree) 
+    pub fn from_words_collection(collection:&WordsCollection, words_to_index:&IndexToWordsAsBTree) 
         -> IndicesCollection {
             let mut res = collection.collections
                 .iter()
-                .map(|x| )
-                .
+                .map(|x| transform_collection_to_indices(x,&words_to_index))
+                .collect();
+
+            IndicesCollection {indices:res}
 
         }
 }
-*/
+
 // vector of unordered, may be repeated words
 pub struct VectorOfWords {
     pub words:Vec<String>
@@ -150,13 +152,17 @@ pub fn eliminate_empty_words(vec:Vec<String>)-> Vec<String>{
 }
 // take Vector of Words and WordsToIndex structure and transform words in the Vector 
 // to the indices: Vector of words -> Vector of indices
-/*
-pub fn transform_collection_to_indices(collection:&Vec<String>, indices:&WordsToIndex) 
-    -> {
+
+pub fn transform_collection_to_indices(collection:&Vec<String>, indices:&IndexToWordsAsBTree) 
+    -> Vec<u32>{
         let mut res = collection
             .iter()
-            .map(|x| )
+            .map(|x| indices.word.get(x).unwrap())
+            .map(|x| x.to_owned())
+            .collect::<Vec<u32>>();
+
+        res
     }
-*/
+
 
 
