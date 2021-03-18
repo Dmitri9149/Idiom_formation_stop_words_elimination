@@ -65,12 +65,13 @@ fn main() {
     sentences.split_on_string("]");
 
     sentences.trim_sentences(' ');
-    sentences.no_empty_strings();
+//    sentences.no_empty_strings();
 
-    let collection = WordsCollection::from_sentences(&sentences, to_collection_split_on_space);
+    let mut collection = WordsCollection::from_sentences(&sentences, to_collection_split_on_space);
 //    let flatten_collection = WordsCollection::flatten_words_collections(&collection);
+    collection.no_empty_strings_and_words();
     let mut words_vector = WordsCollection::flatten_words_collections(&collection);
-    words_vector.no_empty_strings();
+//    words_vector.no_empty_strings();
 //    let words_vocab = WordsVocab::vocab_from_vector(&words_vector);
     let words_vocab = WordsVocabAsBTree::vocab_from_vector(&words_vector);
     let ordered_vector = words_vocab.to_value_ordered_vector();

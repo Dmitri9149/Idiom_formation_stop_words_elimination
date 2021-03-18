@@ -1,4 +1,6 @@
-// handling text on the string stage
+// handling text on the strings stage
+// text is splitted on substrings in some way 
+//
 //
 //use regex::Regex;
 use unicode_segmentation::UnicodeSegmentation;
@@ -72,6 +74,20 @@ impl WordsCollection {
             .collect::<Vec<Vec<String>>>();
         WordsCollection {collections:res}
     }
+
+// eliminate all empty strings from the colletion 
+// it means no any empty subvectors in Vec of Vectors +
+// eliminate all empty words from every sub Vector 
+// it means no any empty words in sub Vectors of a total Vector
+    pub fn no_empty_strings_and_words(&mut self) {
+        self.collections = self.collections
+            .iter()
+            .map(|x| eliminate_empty_words(x.to_vec()))
+            .collect::<Vec<Vec<String>>>();
+        
+    }
+
+
 // flatten words collections to vector of words
     pub fn flatten_words_collections(cn:&WordsCollection)-> VectorOfWords {
         let res = cn.collections
@@ -82,6 +98,16 @@ impl WordsCollection {
 
         VectorOfWords {words:res}
     }
+}
+
+// same as WordsCollection but words now are represented by their 
+// indices
+pub struct IndicesCollection {
+    indices:Vec<Vec<u32>>
+}
+
+impl IndicesCollection {
+
 }
 
 // vector of unordered, may be repeated words
@@ -100,4 +126,15 @@ impl VectorOfWords {
     }
 }
 
+// some helper functions
+// eliminate all empty Strings from Vector of Strings
+//
+pub fn eliminate_empty_words(vec:Vec<String>)-> Vec<String>{
+    let res = vec
+        .iter()
+        .map(|x| x.to_owned())
+        .filter(|x| x.is_empty() == false)
+        .collect::<Vec<String>>();
+    res.to_vec()
 
+}
