@@ -3,7 +3,7 @@ use entropy_tokenizer::text_stage::{TextStageOriginal, TextStage};
 use entropy_tokenizer::sentence_stage::{Sentences, WordsCollection};
 use entropy_tokenizer::string_processing::{to_collection_split_on_space};
 use entropy_tokenizer::words_vocab::{WordsVocab, WordsVocabAsBTree, WordsAsNumbersVocab};
-use entropy_tokenizer::words_to_numbers::{IndexToWords};
+use entropy_tokenizer::words_to_numbers::{IndexToWordsAsBTree};
 
 //use entropy_tokenizer::sentence_stage_a::SentencesA;
 
@@ -75,11 +75,12 @@ fn main() {
 //    let words_vocab = WordsVocab::vocab_from_vector(&words_vector);
     let words_vocab = WordsVocabAsBTree::vocab_from_vector(&words_vector);
     let ordered_vector = words_vocab.to_value_ordered_vector();
-
+/*
     let _special = vec!["eos".to_string(), "bos".to_string(), "none".to_string()];
     let empty = Vec::new();
+*/
 
-    let index_vocab = IndexToWords::from_words_vocab(&words_vocab, empty);
+    let index_vocab = IndexToWordsAsBTree::from_words_vocab(&words_vocab);
 
     let word_as_number_vocab = WordsAsNumbersVocab::from_words_vocab_btree(&words_vocab, &index_vocab);
 
@@ -90,8 +91,29 @@ fn main() {
 //    println!("The words_vocab:\n{:?}\n", &words_vocab.words);
     println!("The number of words :{}", &words_vocab.words.keys().len());
     println!("The ordered (by frequency) vocab of words:\n{:?}\n", &ordered_vector[0..200]);
-    println!("The index to words is :\n{:?}", &index_vocab.index[0..200]);
-    println!("The words to index is :\n{:?}", &index_vocab.word[0..200]);
+
+    let mut j =0;
+    for (key, val) in index_vocab.index {
+        println!("{} {}", &key, &val);
+        j = j+1;
+        if j > 200 {
+            break;
+        }
+    }
+/*
+ * TODO -> print only first N elements from the BTreeMap
+    let mut j =0;
+    for (key, val) in index_vocab.word.into_iter() {
+        println!("{:?} {:?}", &key, &val);
+        j = j+1;
+        if j > 200 {
+            break;
+        }
+    }
+*/
+
+//    println!("The index to words is :\n{:?}", &index_vocab.index[&(0..200)]);
+//    println!("The words to index is :\n{:?}", &index_vocab.word);
     println!("The vocab of index_of_word -> quantity of the word in vocab : \n{:?}"
              , &word_as_number_vocab.words[0..200]);
 

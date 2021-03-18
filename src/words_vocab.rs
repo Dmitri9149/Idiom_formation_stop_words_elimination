@@ -3,7 +3,7 @@
 use std::collections::HashMap;
 use std::collections::btree_map::BTreeMap;
 use crate::sentence_stage::{VectorOfWords};
-use crate::words_to_numbers::{IndexToWords};
+use crate::words_to_numbers::{IndexToWords, IndexToWordsAsBTree};
 
 
 // as HashMap
@@ -70,7 +70,8 @@ pub struct WordsAsNumbersVocab {
 
 
 impl WordsAsNumbersVocab {
-    pub fn from_words_vocab_btree(voc1:&WordsVocabAsBTree, voc2:&IndexToWords)-> WordsAsNumbersVocab{
+// words as indices and + quantity of every word (index)
+    pub fn from_words_vocab_btree_a(voc1:&WordsVocabAsBTree, voc2:&IndexToWords)-> WordsAsNumbersVocab{
 
 // TODO -> check for the length equality and not empty of voc1 and voc2
         let mut words = Vec::new();
@@ -80,5 +81,17 @@ impl WordsAsNumbersVocab {
         }
         WordsAsNumbersVocab {words:words}
     }
+// same as above but we use IndexToWordsAsBTree structure here
+    pub fn from_words_vocab_btree(voc1:&WordsVocabAsBTree, voc2:&IndexToWordsAsBTree)-> WordsAsNumbersVocab{
+
+// TODO -> check for the length equality and not empty of voc1 and voc2
+        let mut words = Vec::new();
+        for (key,value) in voc2.index
+            .iter() {
+            words.push((*key,*voc1.words.get(value).unwrap()));
+        }
+        WordsAsNumbersVocab {words:words}
+    }
+
 }
 
