@@ -5,6 +5,7 @@ pub mod string_processing;
 pub mod words_vocab;
 pub mod words_to_numbers;
 pub mod pairs;
+pub use crate::pairs as pairs_p;
 pub use crate::text_stage as text;
 pub use crate::sentence_stage as sentence;
 //pub use crate::sentence_stage_a as sentence_a;
@@ -23,6 +24,18 @@ fn vec_to_vec_of_vec(vec:Vec<u32>) -> Vec<Vec<u32>> {
 
     vvv
 }
+
+// the function return the key with biggest value
+fn max_key<K, V>(a_hash_map: &HashMap<K, V>) -> Option<&K>
+where
+    V: Ord,
+{
+    a_hash_map
+        .iter()
+        .max_by(|a, b| a.1.cmp(&b.1))
+        .map(|(k, _v)| k)
+}
+
 
 
 /*
