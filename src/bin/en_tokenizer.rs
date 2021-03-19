@@ -90,6 +90,7 @@ fn main() {
         VectorOfIndicesCollection::from_indices_collection(&collection_of_sentences_with_indices);
 
     let init_vocab_of_pairs = Pairs::from_sentences_as_wrapped_numbers(&collection_of_senteces_as_wrapped_indices);
+    let max_pair = Pairs::key_max(&init_vocab_of_pairs);
 
 //    println!("The text : {:?}\n", txt_orig.text);
     println!("The sentences :\n{:?}\n", &sentences.sentences[0..200]);
@@ -126,5 +127,6 @@ fn main() {
     println!("The collection of sentences as indices :\n{:?}"
              , &collection_of_sentences_with_indices.indices[0..200]);
 //    println!("The initial vocabulary of pairs :{:?}", &init_vocab_of_pairs.pairs);
+    println!("The max pairs :{:?}", &max_pair);
 }
 

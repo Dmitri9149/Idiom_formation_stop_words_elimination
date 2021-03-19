@@ -1,7 +1,7 @@
 // vocab of pairs, where pairs are pairs of words 
 // and where words are represented as u32 indexes
 use std::collections::HashMap;
-//use crate::pair::{Pair};
+use crate::max_key;
 use crate::sentence_stage::{IndicesCollection, VectorOfIndicesCollection};
 
 pub struct Pairs {
@@ -43,7 +43,11 @@ impl Pairs {
         Pairs { pairs:hsh }
     }          
 
-
+// calculate the most frequent pair in Pairs
+    pub fn key_max(&self) -> (Vec<u32>, Vec<u32>) {
+        let res = &*max_key(&self.pairs).expect("The vocabulary is to be not empty");
+        (res.0.to_owned(),res.1.to_owned())
+    }
 }
 
 

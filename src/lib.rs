@@ -10,6 +10,8 @@ pub use crate::text_stage as text;
 pub use crate::sentence_stage as sentence;
 //pub use crate::sentence_stage_a as sentence_a;
 pub use crate::string_processing as str_proc;
+use std::collections::HashMap;
+
 
 // some helper functions
 // take Vector of numbers and transform in Vector of Vector of numbers
