@@ -4,35 +4,32 @@ use std::cmp::Ordering;
 
 
 pub struct Pair {
-    first:u32,
-    second:u32,
-    frequency: u32,
+    tensor:Vec<Vec<u32>>
 }
 
 impl Pair {
-    pub fn new(first:u32, second:u32, freq:u32) -> {
-        Pair {
-            first:first,
-            second:second,
-            frequency:freq
+    pub fn new() -> {
+        Tensor {
+            tensor:Vec<_>::new(),
         }
     }
 }
-
-impl Ord for Pair {
+/*
+impl Ord for Tensor {
     fn cmp(&self, other: &Self) -> Ordering {
         self.frequency.cmp(&other.frequency)
     }
 }
 
-impl PartialOrd for Pair {
+impl PartialOrd for Tensor {
     fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
         Some(self.cmp(other))
     }
 }
 
-impl PartialEq for Pair {
+impl PartialEq for Tensor {
     fn eq(&self, other: &Self) -> bool {
         self.frequency == other.frequency
     }
 }
+*/

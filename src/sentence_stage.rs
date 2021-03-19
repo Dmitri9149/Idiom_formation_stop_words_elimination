@@ -123,6 +123,26 @@ impl IndicesCollection {
         }
 }
 
+pub struct VectorOfIndicesCollection {
+    pub indices:Vec<Vec<Vec<u32>>>
+}
+
+impl VectorOfIndicesCollection {
+    pub fn new() -> VectorOfIndicesCollection {
+        VectorOfIndicesCollection {indices:Vec::new()}
+    }
+
+    pub fn from_indices_collection(indices:&IndicesCollection) 
+        -> VectorOfIndicesCollection{
+            let mut res = indices.indices
+                .iter()
+                .map(|x| crate::vec_to_vec_of_vec(x.to_vec()))
+                .collect::<Vec<_>>();
+            VectorOfIndicesCollection {indices:res}
+            
+    }
+
+}
 // vector of unordered, may be repeated words
 pub struct VectorOfWords {
     pub words:Vec<String>
@@ -163,6 +183,3 @@ pub fn transform_collection_to_indices(collection:&Vec<String>, indices:&IndexTo
 
         res
     }
-
-
-
