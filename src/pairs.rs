@@ -44,9 +44,13 @@ impl Pairs {
     }          
 
 // calculate the most frequent pair in Pairs
-    pub fn key_max(&self) -> (Vec<u32>, Vec<u32>) {
-        let res = &*max_key(&self.pairs).expect("The vocabulary is to be not empty");
+    pub fn key_max(&self) -> ((Vec<u32>, Vec<u32>),u32) {
+        let res = max_key(&self.pairs).expect("The vocabulary is to be not empty");
+//        (res.0.to_owned(),res.1.to_owned())
+//        ((res.0.to_owned().0,res.0.to_owned().1),res.1.to_owned)
+//        res.to_owned()
         (res.0.to_owned(),res.1.to_owned())
+
     }
 }
 

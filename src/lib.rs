@@ -28,14 +28,14 @@ fn vec_to_vec_of_vec(vec:Vec<u32>) -> Vec<Vec<u32>> {
 }
 
 // the function return the key with biggest value
-fn max_key<K, V>(a_hash_map: &HashMap<K, V>) -> Option<&K>
+fn max_key<K, V>(a_hash_map: &HashMap<K, V>) -> Option<(&K,&V)>
 where
     V: Ord,
 {
     a_hash_map
         .iter()
         .max_by(|a, b| a.1.cmp(&b.1))
-        .map(|(k, _v)| k)
+//        .map(|(k, v)| (k,v))
 }
 
 
