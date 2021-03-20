@@ -6,6 +6,7 @@
 use unicode_segmentation::UnicodeSegmentation;
 // use std::ops::Deref;
 //use fancy_regex::Regex;
+//use std::ops::Range;
 use crate::text_stage::TextStage;
 use crate::string_processing::separate_punctuation;
 use crate::words_to_numbers::{IndexToWordsAsBTree};
@@ -141,6 +142,19 @@ impl VectorOfIndicesCollection {
             VectorOfIndicesCollection {indices:res}
             
     }
+/*
+    pub fn transform_using_a_pair(&self, pair:&Pair) {
+        let size = indices.indices.len();
+        for i in 0..size {
+            for j in 0..indices.indices[i].len()-1 {
+                if pair == (indices.indices[j],indices.indices[j+1]) {
+
+                }
+            }
+        }
+
+    }
+*/
 
 }
 // vector of unordered, may be repeated words
@@ -182,4 +196,29 @@ pub fn transform_collection_to_indices(collection:&Vec<String>, indices:&IndexTo
             .collect::<Vec<u32>>();
 
         res
+}
+
+pub fn merge_pair_in_vec_of_vec(vec_of_vec:Vec<Vec<u32>>, pair:&(Vec<u32>,Vec<u32>))-> Vec<Vec<u32>> {
+    let mut ranges:Vec<_> = Vec::new();
+    let size = vec_of_vec.len();
+    if size == 1 {
+        vec_of_vec.to_owned();
     }
+
+    let mut begin = 0;
+    for i in 0..vec_of_vec.len()-1 {
+        if pair == &(vec_of_vec[i].to_owned(), vec_of_vec[i+1].to_owned()) {
+            ranges.push(begin..i-1);
+            begin = i+2;
+        }
+    }
+    
+    let mut res:Vec<Vec<_>> = Vec::new();
+    for r in ranges {
+//        let u:i32 = &vec_of_vec[r.start..r.end];
+        res.append(&mut vec_of_vec[r.start..r.end].to_vec());
+        res.append(&mut vec![vec![vec_of_vec[r.end+1][0],vec_of_vec[r.end+2][0]]]);    
+    } 
+
+    res
+}
