@@ -3,7 +3,7 @@ use entropy_tokenizer::text_stage::{TextStageOriginal, TextStage};
 use entropy_tokenizer::sentence_stage::{Sentences
     , WordsCollection,IndicesCollection, VectorOfIndicesCollection};
 use entropy_tokenizer::string_processing::{to_collection_split_on_space};
-use entropy_tokenizer::words_vocab::{WordsVocab, WordsVocabAsBTree, WordsAsNumbersVocab};
+use entropy_tokenizer::words_vocab::{WordsVocabAsBTree, WordsAsNumbersVocab};
 use entropy_tokenizer::words_to_numbers::{IndexToWordsAsBTree};
 use entropy_tokenizer::pairs::{Pairs};
 
@@ -72,7 +72,7 @@ fn main() {
     let mut collection = WordsCollection::from_sentences(&sentences, to_collection_split_on_space);
 //    let flatten_collection = WordsCollection::flatten_words_collections(&collection);
     collection.no_empty_strings_and_words();
-    let mut words_vector = WordsCollection::flatten_words_collections(&collection);
+    let words_vector = WordsCollection::flatten_words_collections(&collection);
 //    words_vector.no_empty_strings();
 //    let words_vocab = WordsVocab::vocab_from_vector(&words_vector);
     let words_vocab = WordsVocabAsBTree::vocab_from_vector(&words_vector);

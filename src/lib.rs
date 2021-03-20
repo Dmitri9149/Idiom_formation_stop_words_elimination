@@ -18,7 +18,7 @@ use std::collections::HashMap;
 fn vec_to_vec_of_vec(vec:Vec<u32>) -> Vec<Vec<u32>> {
     let size = vec.len();
     let mut vvv = Vec::with_capacity(size);
-    let mut vv = Vec::with_capacity(1);
+    let mut vv;
     for v in &vec {
         vv = vec![v.to_owned()];
         vvv.push(vv);

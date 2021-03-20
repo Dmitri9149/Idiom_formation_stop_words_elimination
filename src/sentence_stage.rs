@@ -114,7 +114,7 @@ pub struct IndicesCollection {
 impl IndicesCollection {
     pub fn from_words_collection(collection:&WordsCollection, words_to_index:&IndexToWordsAsBTree) 
         -> IndicesCollection {
-            let mut res = collection.collections
+            let res = collection.collections
                 .iter()
                 .map(|x| transform_collection_to_indices(x,&words_to_index))
                 .collect();
@@ -135,27 +135,20 @@ impl VectorOfIndicesCollection {
 
     pub fn from_indices_collection(indices:&IndicesCollection) 
         -> VectorOfIndicesCollection{
-            let mut res = indices.indices
+            let res = indices.indices
                 .iter()
                 .map(|x| crate::vec_to_vec_of_vec(x.to_vec()))
                 .collect::<Vec<_>>();
             VectorOfIndicesCollection {indices:res}
             
     }
-/*
-    pub fn transform_using_a_pair(&self, pair:&Pair) {
-        let size = indices.indices.len();
-        for i in 0..size {
-            for j in 0..indices.indices[i].len()-1 {
-                if pair == (indices.indices[j],indices.indices[j+1]) {
 
-                }
-            }
-        }
-
+    pub fn transform_using_a_pair(&mut self, pair:&(Vec<u32>,Vec<u32>)) {
+        self.indices = self.indices
+            .iter()
+            .map(|x| merge_pair_in_vec_of_vec(x.to_vec(),pair))
+            .collect::<Vec<Vec<Vec<u32>>>>();
     }
-*/
-
 }
 // vector of unordered, may be repeated words
 pub struct VectorOfWords {
@@ -189,7 +182,7 @@ pub fn eliminate_empty_words(vec:Vec<String>)-> Vec<String>{
 
 pub fn transform_collection_to_indices(collection:&Vec<String>, indices:&IndexToWordsAsBTree) 
     -> Vec<u32>{
-        let mut res = collection
+        let res = collection
             .iter()
             .map(|x| indices.word.get(x).unwrap())
             .map(|x| x.to_owned())
@@ -198,15 +191,13 @@ pub fn transform_collection_to_indices(collection:&Vec<String>, indices:&IndexTo
         res
 }
 
-pub fn merge_pair_in_vec_of_vec(vec_of_vec:Vec<Vec<u32>>, pair:&(Vec<u32>,Vec<u32>))-> Vec<Vec<u32>> {
+pub fn merge_pair_in_vec_of_vec(mut vec_of_vec:Vec<Vec<u32>>, pair:&(Vec<u32>,Vec<u32>))
+    -> Vec<Vec<u32>> {
     let mut ranges:Vec<_> = Vec::new();
-    let size = vec_of_vec.len();
-    if size == 1 {
-        vec_of_vec.to_owned();
-    }
+    let size = &vec_of_vec.len();
 
     let mut begin = 0;
-    for i in 0..vec_of_vec.len()-1 {
+    for i in 0..size-1 {
         if pair == &(vec_of_vec[i].to_owned(), vec_of_vec[i+1].to_owned()) {
             ranges.push(begin..i-1);
             begin = i+2;
@@ -214,10 +205,14 @@ pub fn merge_pair_in_vec_of_vec(vec_of_vec:Vec<Vec<u32>>, pair:&(Vec<u32>,Vec<u3
     }
     
     let mut res:Vec<Vec<_>> = Vec::new();
+    let mut x:Vec<_>;
     for r in ranges {
-//        let u:i32 = &vec_of_vec[r.start..r.end];
         res.append(&mut vec_of_vec[r.start..r.end].to_vec());
-        res.append(&mut vec![vec![vec_of_vec[r.end+1][0],vec_of_vec[r.end+2][0]]]);    
+//        res.append(&mut vec![vec![vec_of_vec[r.end+1][0],vec_of_vec[r.end+2][0]]]);   
+        x = vec_of_vec[r.end+1].to_owned();
+        x.append(&mut vec_of_vec[r.end+2]);
+        res.push(x.to_owned());    
+
     } 
 
     res
