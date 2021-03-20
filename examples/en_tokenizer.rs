@@ -86,7 +86,7 @@ fn main() {
 
     let word_as_number_vocab = WordsAsNumbersVocab::from_words_vocab_btree(&words_vocab, &index_vocab);
     let collection_of_sentences_with_indices = IndicesCollection::from_words_collection(&collection,&index_vocab);
-    let collection_of_senteces_as_wrapped_indices = 
+    let mut collection_of_senteces_as_wrapped_indices = 
         VectorOfIndicesCollection::from_indices_collection(&collection_of_sentences_with_indices);
 
     let init_vocab_of_pairs = Pairs::from_sentences_as_wrapped_numbers(&collection_of_senteces_as_wrapped_indices);
@@ -128,5 +128,22 @@ fn main() {
              , &collection_of_sentences_with_indices.indices[0..200]);
 //    println!("The initial vocabulary of pairs :{:?}", &init_vocab_of_pairs.pairs);
     println!("The max pairs :{:?}", &max_pair);
+
+    let mut sentences_as_tensors;
+    sentences_as_tensors = 
+    VectorOfIndicesCollection::from_indices_collection(&collection_of_sentences_with_indices);
+    let num_merges = 100;
+    let mut prs; 
+    let mut max_pair;
+    for merge in 0..num_merges {
+        println!("Iteration number:========== {}", &merge);
+        println!("sentences_as_tensors :============ {:?}", &sentences_as_tensors.indices[0..20]);
+
+        prs = Pairs::from_sentences_as_wrapped_numbers(&sentences_as_tensors);
+        max_pair = Pairs::key_max(&prs);
+        println!("Max pair !!!========== {:?}", &max_pair);    
+        println!("&max_pair.0 ========== {:?}", &max_pair.0);
+        sentences_as_tensors.transform_using_a_pair(&max_pair.0);
+    }
 }
 

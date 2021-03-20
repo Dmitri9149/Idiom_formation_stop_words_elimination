@@ -30,7 +30,10 @@ impl Pairs {
 
     pub fn from_sentences_as_wrapped_numbers(indices:&VectorOfIndicesCollection) -> Pairs {
         let mut hsh = HashMap::new();
+        println!("indices.indices.len() {}\n", indices.indices.len());
         for i in 0..indices.indices.len() { // indices.indices is Vec<Vec<u32>> 
+            println!("indices.indices[i].len : {} and index i {}\n", indices.indices[i].len(), i);
+            println!("vector i : {:?}\n", indices.indices[i]);
             for j in 0..indices.indices[i].len()-1 { // indices.indices[i] is Vec<u32>
                 let count = hsh
                     .entry((indices.indices[i][j].to_owned(),indices.indices[i][j+1].to_owned()))
