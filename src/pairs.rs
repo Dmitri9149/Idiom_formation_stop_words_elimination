@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use crate::max_key;
 use crate::sentence_stage::{IndicesCollection, VectorOfIndicesCollection};
+use crate::words_to_numbers::{IndexToWordsAsBTree};
 
 pub struct Pairs {
     pub pairs:HashMap<(Vec<u32>,Vec<u32>),u32>
@@ -30,10 +31,10 @@ impl Pairs {
 
     pub fn from_sentences_as_wrapped_numbers(indices:&VectorOfIndicesCollection) -> Pairs {
         let mut hsh = HashMap::new();
-        println!("indices.indices.len() {}\n", indices.indices.len());
+//        println!("indices.indices.len() {}\n", indices.indices.len());
         for i in 0..indices.indices.len() { // indices.indices is Vec<Vec<u32>> 
-            println!("indices.indices[i].len : {} and index i {}\n", indices.indices[i].len(), i);
-            println!("vector i : {:?}\n", indices.indices[i]);
+//            println!("indices.indices[i].len : {} and index i {}\n", indices.indices[i].len(), i);
+//            println!("vector i : {:?}\n", indices.indices[i]);
             for j in 0..indices.indices[i].len()-1 { // indices.indices[i] is Vec<u32>
                 let count = hsh
                     .entry((indices.indices[i][j].to_owned(),indices.indices[i][j+1].to_owned()))
@@ -54,4 +55,20 @@ impl Pairs {
     }
 }
 
+// transform pair of indices to pair of words
+pub fn transform_indices_to_words(pair:&(Vec<u32>, Vec<u32>), indices_words:&IndexToWordsAsBTree)
+    -> (Vec<String>,Vec<String>){
+    let res1:Vec<String>; 
+    let res2:Vec<String>;
+    res1 = pair.0
+        .iter()
+        .map(|x| indices_words.index.get(x).unwrap().to_string())
+        .collect();
 
+    res2 = pair.1
+        .iter()
+        .map(|x| indices_words.index.get(x).unwrap().to_string())
+        .collect();
+
+    (res1,res2)
+}

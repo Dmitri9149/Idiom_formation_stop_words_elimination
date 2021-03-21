@@ -204,16 +204,17 @@ pub fn merge_pair_in_vec_of_vec(mut vec_of_vec:Vec<Vec<u32>>, pair:&(Vec<u32>,Ve
         }
     }
     
-    let mut res:Vec<Vec<_>> = Vec::new();
-    let mut x:Vec<_>;
-    for r in ranges {
-        res.append(&mut vec_of_vec[r.start..r.end].to_vec());
-//        res.append(&mut vec![vec![vec_of_vec[r.end+1][0],vec_of_vec[r.end+2][0]]]);   
-        x = vec_of_vec[r.end].to_owned();
-        x.append(&mut vec_of_vec[r.end+1]);
-        res.push(x.to_owned());    
-
-    } 
-
-    res
+    if begin !=0 {
+        let mut res:Vec<Vec<_>> = Vec::new();
+        let mut x:Vec<_>;
+        for r in ranges {
+            res.append(&mut vec_of_vec[r.start..r.end].to_vec());
+            x = vec_of_vec[r.end].to_owned();
+            x.append(&mut vec_of_vec[r.end+1]);
+            res.push(x.to_owned());    
+        } 
+        res 
+    } else {
+        vec_of_vec.to_owned()
+    }
 }
