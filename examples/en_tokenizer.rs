@@ -5,7 +5,7 @@ use entropy_tokenizer::sentence_stage::{Sentences
 use entropy_tokenizer::string_processing::{to_collection_split_on_space};
 use entropy_tokenizer::words_vocab::{WordsVocabAsBTree, WordsAsNumbersVocab};
 use entropy_tokenizer::words_to_numbers::{IndexToWordsAsBTree};
-use entropy_tokenizer::pairs::{Pairs};
+use entropy_tokenizer::pairs::{Pairs,transform_indices_to_words};
 
 //use entropy_tokenizer::sentence_stage_a::SentencesA;
 
@@ -101,7 +101,7 @@ fn main() {
     println!("The ordered (by frequency) vocab of words:\n{:?}\n", &ordered_vector[0..200]);
 
     let mut j =0;
-    for (key, val) in index_vocab.index {
+    for (key, val) in &index_vocab.index {
         println!("{} {}", &key, &val);
         j = j+1;
         if j > 200 {
@@ -132,17 +132,20 @@ fn main() {
     let mut sentences_as_tensors;
     sentences_as_tensors = 
     VectorOfIndicesCollection::from_indices_collection(&collection_of_sentences_with_indices);
-    let num_merges = 100;
+    let num_merges = 1000;
     let mut prs; 
     let mut max_pair;
+    let mut max_pair_as_words;
     for merge in 0..num_merges {
         println!("Iteration number:========== {}", &merge);
         println!("sentences_as_tensors :============ {:?}", &sentences_as_tensors.indices[0..20]);
 
         prs = Pairs::from_sentences_as_wrapped_numbers(&sentences_as_tensors);
         max_pair = Pairs::key_max(&prs);
+        max_pair_as_words = transform_indices_to_words(&max_pair.0, &index_vocab);
         println!("Max pair !!!========== {:?}", &max_pair);    
-        println!("&max_pair.0 ========== {:?}", &max_pair.0);
+        println!("Max_pair_as_words ========== {:?}", &max_pair_as_words);
+
         sentences_as_tensors.transform_using_a_pair(&max_pair.0);
     }
 }

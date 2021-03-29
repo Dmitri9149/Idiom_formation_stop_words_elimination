@@ -197,13 +197,26 @@ pub fn merge_pair_in_vec_of_vec(mut vec_of_vec:Vec<Vec<u32>>, pair:&(Vec<u32>,Ve
     let size = &vec_of_vec.len();
 
     let mut begin = 0;
-    for i in 0..size-1 {
+    let mut i = 0;
+    while i < size-1 {
         if pair == &(vec_of_vec[i].to_owned(), vec_of_vec[i+1].to_owned()) {
             ranges.push(begin..i);
             begin = i+2;
+            i = i+2;
+        } else {
+            i+=1;
         }
     }
-    
+/*
+    let mut begin = 0;
+    for mut i in 0..size-1 {
+        if pair == &(vec_of_vec[i].to_owned(), vec_of_vec[i+1].to_owned()) {
+            ranges.push(begin..i);
+            begin = i+2;
+            i = i+2;
+        }
+    }
+*/  
     if begin !=0 {
         let mut res:Vec<Vec<_>> = Vec::new();
         let mut x:Vec<_>;
