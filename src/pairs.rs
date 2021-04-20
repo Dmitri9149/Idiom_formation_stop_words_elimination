@@ -16,11 +16,18 @@ impl Pairs {
 
     pub fn from_sentences_as_numbers(indices:&IndicesCollection) -> Pairs {
         let mut hsh = HashMap::new();
+        let mut size;
         for i in 0..indices.indices.len() { // indices.indices is Vec<Vec<u32>> 
-            for j in 0..indices.indices[i].len()-1 { // indices.indices[i] is Vec<u32>
+            size = indices.indices[i].len();
+            if size == 0 {
+                panic!("Zero length collection! Panic!");
+            } else if size ==1 {
+                continue
+            }
+            for j in 0..size-1 { // indices.indices[i] is Vec<u32>
                 let count = hsh
                     .entry((vec![indices.indices[i][j].to_owned()],vec![indices.indices[i][j+1].to_owned()]))
-                    .or_insert(0);
+                    .or_insert(1);
                 *count +=1;
 
             }
