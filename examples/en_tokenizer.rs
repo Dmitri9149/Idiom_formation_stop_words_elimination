@@ -132,7 +132,7 @@ fn main() {
     let mut sentences_as_tensors;
     sentences_as_tensors = 
     VectorOfIndicesCollection::from_indices_collection(&collection_of_sentences_with_indices);
-    let num_merges = 1000;
+    let num_merges = 600;
     let mut prs; 
     let mut max_pair;
     let mut max_pair_as_words;
