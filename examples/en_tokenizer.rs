@@ -93,12 +93,12 @@ fn main() {
     let max_pair = Pairs::key_max(&init_vocab_of_pairs);
 
 //    println!("The text : {:?}\n", txt_orig.text);
-    println!("The sentences :\n{:?}\n", &sentences.sentences[0..200]);
-    println!("The collections:\n{:?}\n", &collection.collections[0..200]);
+    println!("The first 200 sentences :\n{:?}\n", &sentences.sentences[0..200]);
+    println!("The first 200 collections:\n{:?}\n", &collection.collections[0..200]);
 //    println!("The words vector:\n{:?}\n", &words_vector);
 //    println!("The words_vocab:\n{:?}\n", &words_vocab.words);
     println!("The number of words :{}", &words_vocab.words.keys().len());
-    println!("The ordered (by frequency) vocab of words:\n{:?}\n", &ordered_vector[0..200]);
+    println!("The ordered (by frequency) vocab of words (200 words):\n{:?}\n", &ordered_vector[0..200]);
 
     let mut j =0;
     for (key, val) in &index_vocab.index {
@@ -122,9 +122,9 @@ fn main() {
 
 //    println!("The index to words is :\n{:?}", &index_vocab.index[&(0..200)]);
 //    println!("The words to index is :\n{:?}", &index_vocab.word);
-    println!("The vocab of index_of_word -> quantity of the word in vocab : \n{:?}"
+    println!("The vocab of index_of_word -> quantity of the word in vocab (for 200 words): \n{:?}"
              , &word_as_number_vocab.words[0..200]);
-    println!("The collection of sentences as indices :\n{:?}"
+    println!("The collection of sentences as indices (for 200 words):\n{:?}"
              , &collection_of_sentences_with_indices.indices[0..200]);
 //    println!("The initial vocabulary of pairs :{:?}", &init_vocab_of_pairs.pairs);
     println!("The max pairs :{:?}", &max_pair);
@@ -138,13 +138,13 @@ fn main() {
     let mut max_pair_as_words;
     for merge in 0..num_merges {
         println!("Iteration number:========== {}", &merge);
-        println!("sentences_as_tensors :============ {:?}", &sentences_as_tensors.indices[0..20]);
+//        println!("sentences_as_tensors :============ {:?}", &sentences_as_tensors.indices[0..20]);
 
         prs = Pairs::from_sentences_as_wrapped_numbers(&sentences_as_tensors);
         max_pair = Pairs::key_max(&prs);
         max_pair_as_words = transform_indices_to_words(&max_pair.0, &index_vocab);
         println!("Max pair !!!========== {:?}", &max_pair);    
-        println!("Max_pair_as_words ========== {:?}", &max_pair_as_words);
+        println!("Max_pair_as_words ========== {:?}\n", &max_pair_as_words);
 
         sentences_as_tensors.transform_using_a_pair(&max_pair.0);
     }
