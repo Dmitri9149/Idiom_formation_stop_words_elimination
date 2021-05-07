@@ -1,9 +1,12 @@
 In the work tokenizer similar in structure to Byte Pair Encoding tokenizer (see  
-https://arxiv.org/pdf/1508.07909.pdf original article for the BPE) is used for text analysis at the level of sentences. Originally BPE was used for splitting of words.
+https://arxiv.org/pdf/1508.07909.pdf original article for the BPE) is used for text analysis at the level of sentences. (The toknizer is written here in Rust).
+Originally BPE was used for splitting of words.
 The text is James Joyse "Ulysses"" from the Gutemberg Project
 http://www.gutenberg.org/ebooks/4300 .
 
-Tokenizers find the most frequent pairs of 'tokens' and generate a new token which may be represented as 'flattening' of the previous two tokens: ('i','ng') -> 'ing' , for example, if we run the tokenizer at the level of chars and words. My experience is that we must be very explicit and clever with 'borders': the tokenization process is to be constrained by 'natural borders': border of words (if our tokens are chars and chars generated tokens) or by 'sentence' borders, if we run tokenizer at the level of words and words colections within 'sentences'. 
+Tokenizers find the most frequent pairs of 'tokens' and generate a new token which may be represented as 'flattening' or 'merging' of the previous two tokens: ('i','ng') -> 'ing' , for example, if we run the tokenizer at the level of chars and words. If we run the tokenizer at the level of words, we will see how 'stop' words like 'the' are quickly paired with other words: ('of','the') -> 'of the'. The big resourse of 'the' is quickly splitted to 'of the' , 'in the', 'to the'. The similar behaviour is for 'a' and many other 'stop' words. 
+Actually we may see the process of 'stop' words elimination. The words are not 'uselles' but their natural meaning arise is in combination with other words. The 'stop' words are resourses for 'idioms' and have to used as the consolidated words combinations. Outside such combinations, the words may be really meaningless. 
+My experience is that we must be very explicit and clever with 'borders': the tokenization process is to be constrained by 'natural borders': border of words (if our tokens are chars and chars generated tokens) or by 'sentence' borders, if we run tokenizer at the level of words and words colections within 'sentences'. 
 
 In the work the  text was split on sentences. But it is not enought: actual "borders" most probably correspond to punctuations. And sentences was additionally split on some punctuation marks (see the code for more details). 
 
@@ -21,7 +24,7 @@ reflect the English text internal structure. It is quite natural, because the "U
 
 We may think also about the idioms as a new (partly) text specific 'vocab'. Such idioms are to be considered as 'indivisible' pairs in text analysis, and may characterize a text much better , than just a single words. 'of the ' and 
 'of a' have very specific and quite clear meaning. But if we will take 'the',  'a' just a separate words we will 
-quickly come to the 'stop' words notion. The general receips in text analysis: the words is better to eliminate from specific text analyses, there are many of such words, the words are spread within a text and adds nothing to a meaning. 
+quickly come to the 'stop' words notion and the general receips in text analysis: the words is better to eliminate from specific text analyses, there are many of such words, the words are spread within a text and adds nothing to a meaning.... etc.
 
 But the tokenization process may change the status of the words. If you will check the output of the programm, 
 you will see there are: ("the", 13676), ("of", 8171), ("and", 6695), ("a", 5885), ("to", 4873),  
