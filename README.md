@@ -68,5 +68,8 @@ But the work is mostly for experiments (I have to run a lot to make an algorythm
 
 Below is a sample output from the programm. The number of iteration is about 600. At about 550..600 iteration the quantity of newly generated tokens is about 10 only. The first iteration generate 'of the' token with 1640 pcs. 
 
+```
+
+
 
 
