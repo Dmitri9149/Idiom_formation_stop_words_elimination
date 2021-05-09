@@ -44,18 +44,18 @@ Let us start from words and characters. We can split words to collection of char
 Actually, it is not enought. In the basis system the 'd o g' and 'g o d' words will be the same vector. See https://github.com/Dmitri9149/Rust_Tokenizers.git where the tokenizer is working on the level of words. There I use maximun of entropy to find the optimal number of merges.
 
 Below are some preliminary considerations. You may skip it and just see the sample output of the program, which shows the dynamics of 'idioms' generation and 'stop' words 'elimination'.
---------------
+
+===============================
 Tokenization process at the character level will very soon generate a new representation for the words: something like 'do g' and go d', where 'do' and 'go' will be our new basis vectors in addition to original 'g' and 'd'. If we will iterate long enought, the representation of words in out new system of 'basic tokens' will be one to one: even the words will be still 'bag of tokens', because we can permute the vectors in the sum of vectors. 'do g' will still coinsides with 'g do' in vector representation.  But the 'g do' is not a word in English! There is very strong summetry breaking in any language, like 'or' is a word and 'ro' is not. 
-Even more. 'With Dmitri' in English is 'Dmitrikanssa' in Finnish, where we may see strong interplay of tokens as chars and tokens as words. We may proceeds as follows. 
-a. Start from words as characters collections and generate a new tokens from characters. The original (chars) and newly generated tokens will be our new basis vectors. What is very important: some tokens will be actually our words: 't' 'h' will combine in 'th' at the first iterations and very soon a new token 'the' will be actually generated. Quite many tokens will be actually full  words. 
-b. Start from sentences as words collections. Generate the new tokens - 'idioms' (what is done in the example work). Add the new idioms as additional basic vectors. 
+In the 'With Dmitri' in English and 'Dmitrikanssa' in Finnish, we may see strong interplay of tokens as characters and tokens as words. We may proceeds as follows. 
+a. Start from words as characters collections and generate a new tokens from characters. The generated tokens will be our basis vectors (or features). Some tokens will be actually full words: 't' 'h' will combine in 'th' at the first iterations and very soon a new token 'the' will be generated. Quite many of tokens will be actually full words (most frequent and specific to the text), and some (more seldom) slitted to several tokens.
+b. Start from sentences as words collections. Generate the new tokens - 'idioms' (what is done in the current work). Add the new idioms as additional basic vectors (features). 
 SPLITT THE REST OF WORDS IN CHARACTERS...TOKENS BASIS. 
 Our basis will looks like this: "a", "b"......"ing", ..., "the",... "token", "iz", "ation"..., "in the", ..., 
 "of the", " get rid of"  ....
 We can use the basis for a text analysis and machine translation.
-The big question is HOW MANY ITERATIONs (MERGES) WE HAVE TO MAKE. I do not discuss the topic here. Let us keep it as 'hyperparameter' which we have to find in some way. For the chars...words tokenizer,one  of the possibilities is as follows. At every iteration our vacabulary of tokens: (token, token quantity) is changing. We are getting a new tokens, some old tokens may disappear. We can calculate entropy of the vocabulary at every stage. The entropy is quickly run at the beginning and then reach a plato or even begin to decrease (has maximun at some iteration). The iteration where we reach a plato or maximum of the entropy is a one possible choice for the 'best number of iterations'. 
-This is the topic of my current researches. 
----------------------------------------
+The big question is HOW MANY ITERATIONs (MERGES) WE HAVE TO MAKE. I do not discuss the topic here. Let us keep it as 'hyperparameter' which we have to find in some way. For the characters...words tokenizer, one  of the possibilities is as follows. At every iteration our vacabulary of tokens: (token, token quantity) is changing. We are getting a new tokens, some old tokens may disappear. We can calculate entropy of the vocabulary at every stage. The entropy is quickly growing at the beginning and then reach a plato or even begin to decrease (has maximun at some iteration). The iteration where we reach a plato or maximum of the entropy is a one possible choice for the 'best number of iterations'. See: https://github.com/Dmitri9149/Rust_Tokenizers.git
+=====================================
 
 It is possible to run examples with : 
 `cargo run --example en_tokenizer` (en_tokenizer) is the name of example. 
